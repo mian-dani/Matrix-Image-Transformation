@@ -44,7 +44,12 @@ const Textbar = () => {
 
   const zoom = () => {
     const zom = document.getElementById("genImage");
-    zom.style.scale(1.5);
+    zom.style.transform = "scale(0.5)";
+  };
+
+  const reflect = () => {
+    const ref = document.getElementById("genImage");
+    ref.style.transform = "scaleX(-1)";
   };
 
   // Returning TextBar.js
@@ -86,9 +91,11 @@ const Textbar = () => {
           Rotate
         </button>
         <button className="btn" onClick={zoom}>
-          Zoom
+          Zoomout
         </button>
-        <button className="btn">Reflect</button>
+        <button className="btn" onClick={reflect}>
+          Reflect
+        </button>
       </div>
       {/* </div> */}
     </section>
