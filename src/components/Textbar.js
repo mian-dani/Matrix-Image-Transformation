@@ -35,6 +35,18 @@ const Textbar = () => {
     setLoading(false);
   };
 
+  //// Transformation functions
+
+  const rotate = () => {
+    const rotate = document.getElementById("genImage");
+    rotate.style.transform = "rotate(90deg)";
+  };
+
+  const zoom = () => {
+    const zom = document.getElementById("genImage");
+    zom.style.scale(1.5);
+  };
+
   // Returning TextBar.js
   return (
     <section className="textSection">
@@ -57,7 +69,7 @@ const Textbar = () => {
             <audio src="./loading-audio.mp3" autoPlay loop />
           </div>
         ) : imageUrl ? (
-          <img src={imageUrl} className="image" alt="AI Thing" />
+          <img src={imageUrl} className="image" id="genImage" alt="AI Thing" />
         ) : (
           <img
             src="/no-connection.png"
@@ -68,6 +80,17 @@ const Textbar = () => {
           />
         )}
       </div>
+      {/* <div className="buttonsMainDiv"> */}
+      <div className="btnDiv">
+        <button className="btn" id="rotateBtn" onClick={rotate}>
+          Rotate
+        </button>
+        <button className="btn" onClick={zoom}>
+          Zoom
+        </button>
+        <button className="btn">Reflect</button>
+      </div>
+      {/* </div> */}
     </section>
   );
 };

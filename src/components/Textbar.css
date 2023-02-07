@@ -1,6 +1,7 @@
 /* Window Screen */
 .body {
   background-color: #202123;
+  
 }
 
 /* Project Title */
@@ -14,6 +15,7 @@
 
 .title {
   color: white;
+  margin-top: 10px;
   font-size: 40px;
   font-family: "Varela Round", sans-serif;
   font-weight: 400;
@@ -22,7 +24,7 @@
 
 .desc {
   margin-top: -10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: white;
   font-family: "Varela Round", sans-serif;
   border-radius: 10px;
@@ -38,7 +40,7 @@
 }
 
 .textBar {
-  margin-top: 30px;
+  margin-top: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,7 +110,7 @@
 /* Generated Image */
 
 .generateImage {
-  margin-top: 50px;
+  margin-top: 25px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -123,6 +125,39 @@
     inset 0 10px 10px rgba(0, 0, 0, 0.23),
     inset 0 -10px 10px rgba(0, 0, 0, 0.23);
 }
+
+.btn{
+  height: 50px;
+  width: 100px;
+  background: #36d6b7;
+  color: white;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 15px;
+  font-size: 16px;
+  font-family: "Courier Prime", monospace;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  
+}
+
+.btn:hover{
+  background: #1f927b;
+
+}
+
+.btnDiv{
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  
+}
+
+/* .buttonsMainDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
 
 /* React Spinner */
 
