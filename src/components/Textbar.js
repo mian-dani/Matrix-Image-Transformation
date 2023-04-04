@@ -1,7 +1,12 @@
 import "./Textbar.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { PacmanLoader } from "react-spinners";
+import toast from "./Notification";
+import messageImg from "../Assets/message.png";
+import tempImg from "../Assets/no-connection.png";
+import myAudio from "../Assets/loading-audio.mp3";
 
+// API Configuration
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -13,11 +18,34 @@ const Textbar = () => {
   const [userPrompt, setUserPrompt] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  // Method to handle enter-key press
+  // Method to handle key press event
   const handleKeyDown = (event) => {
-    if (event.keyCode === 13) {
+    if (event.key === "Enter") {
+      if (userPrompt.trim() === "") {
+        // Toast notification call
+        customToast();
+      } else {
+        generateImage();
+      }
+    }
+  };
+
+  // Method to handle onClick event
+  const handleOnClick = () => {
+    if (userPrompt.trim() === "") {
+      // Toast notification call
+      customToast();
+    } else {
       generateImage();
     }
+  };
+
+  // Method to generate custom toast notification
+  const customToast = () => {
+    toast.open({
+      type: "warning",
+      message: "Textfield cannot be empty",
+    });
   };
 
   // Method to generate image
@@ -35,21 +63,31 @@ const Textbar = () => {
     setLoading(false);
   };
 
-  //// Transformation functions
+  // Variable declarations
+  let currRotation = 0;
+  let currZoom = 1;
+  let currReflection = false;
 
+  // Methods to perform operations
   const rotate = () => {
-    const rotate = document.getElementById("genImage");
-    rotate.style.transform = "rotate(90deg)";
+    currRotation += 90;
+    const image = document.getElementById("genImage");
+    image.style.transform = `rotate(${currRotation}deg)`;
   };
 
-  const zoom = () => {
-    const zom = document.getElementById("genImage");
-    zom.style.transform = "scale(0.5)";
+  const zoomOut = () => {
+    // Maximum scaling of 0.5
+    if (currZoom > 0.5) {
+      currZoom -= 0.1;
+    }
+    const zoom = document.getElementById("genImage");
+    zoom.style.transform = `scale(${currZoom})`;
   };
 
   const reflect = () => {
+    currReflection = !currReflection;
     const ref = document.getElementById("genImage");
-    ref.style.transform = "scaleX(-1)";
+    ref.style.transform = currReflection ? "scaleX(-1)" : "scaleX(1)";
   };
 
   // Returning TextBar.js
@@ -63,21 +101,21 @@ const Textbar = () => {
           onChange={(e) => setUserPrompt(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <button className="messageButton" onClick={() => generateImage()}>
-          <img src="/message.png" alt="" className="message" />
+        <button className="messageButton" onClick={handleOnClick}>
+          <img src={messageImg} alt="" className="message" />
         </button>
       </div>
       <div className="generateImage">
         {loading ? (
           <div className="reactSpinner">
             <PacmanLoader size={40} color="#36D6B7" />
-            <audio src="./loading-audio.mp3" autoPlay loop />
+            <audio src={myAudio} autoPlay loop />
           </div>
         ) : imageUrl ? (
           <img src={imageUrl} className="image" id="genImage" alt="AI Thing" />
         ) : (
           <img
-            src="/no-connection.png"
+            src={tempImg}
             className="image"
             alt="no-connection"
             height={30}
@@ -85,19 +123,17 @@ const Textbar = () => {
           />
         )}
       </div>
-      {/* <div className="buttonsMainDiv"> */}
       <div className="btnDiv">
         <button className="btn" id="rotateBtn" onClick={rotate}>
           Rotate
         </button>
-        <button className="btn" onClick={zoom}>
-          Zoomout
+        <button className="btn" onClick={zoomOut}>
+          Zoom-Out
         </button>
         <button className="btn" onClick={reflect}>
           Reflect
         </button>
       </div>
-      {/* </div> */}
     </section>
   );
 };
